@@ -1,0 +1,117 @@
+package hospital.management.system;
+
+import net.proteanit.sql.DbUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+
+public class SearchRoom extends JFrame implements ActionListener {
+
+    Choice c1;
+    JTable table;
+    JButton b1,b2;
+
+    SearchRoom()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBounds(5,5,1000,1000);
+        panel.setBackground(new Color(207, 243, 250));
+        add(panel);
+
+        JLabel l1= new JLabel("Search for room");
+        l1.setBounds(250,11,186,35);
+        l1.setFont(new Font("Tahoma",Font.BOLD,20));
+        l1.setForeground(Color.black);
+        panel.add(l1);
+
+        JLabel l2= new JLabel("Status");
+        l2.setBounds(50,73,120,20);
+        l2.setFont(new Font("Tahoma",Font.BOLD,20));
+        l2.setForeground(Color.black);
+        panel.add(l2);
+
+        c1 = new Choice();
+        c1.setBounds(170,70,250,30);
+        c1.setFont(new Font("Tahoma",Font.BOLD,15));
+        c1.setForeground(Color.white);
+        c1.setBackground(Color.black);
+        c1.add("Availabil");
+        c1.add("Occupied");
+        panel.add(c1);
+
+        table = new JTable();
+        table.setBounds(0,110,700,400);
+        table.setBackground(new Color(207, 243, 250));
+        table.setFont(new Font("Tahoma",Font.BOLD,10));
+        panel.add(table);
+
+        try{
+            Connector c = new Connector();
+            String q = "select * from room";
+            ResultSet resultSet = c.statement.executeQuery(q);
+            table.setModel(DbUtils.resultSetToTableModel(resultSet));
+
+        }catch (Exception E){
+            E.printStackTrace();
+        }
+
+        JLabel l3= new JLabel("Search for room");
+        l3.setBounds(250,11,186,35);
+        l3.setFont(new Font("Tahoma",Font.BOLD,20));
+        l3.setForeground(Color.black);
+        panel.add(l3);
+
+        JLabel l4= new JLabel("Status");
+        l4.setBounds(50,73,120,20);
+        l4.setFont(new Font("Tahoma",Font.BOLD,20));
+        l4.setForeground(Color.black);
+        panel.add(l4);
+
+        b1= new JButton("Back");
+        b1.setBounds(500,570,150,30);
+        b1.setForeground(Color.white);
+        b1.setBackground(Color.black);
+        b1.setFont(new Font("Tahoma",Font.BOLD,15));
+        b1.addActionListener(this);
+        panel.add(b1);
+
+        b2= new JButton("Search");
+        b2.setBounds(300,570,150,30);
+        b2.setForeground(Color.white);
+        b2.setBackground(Color.black);
+        b2.setFont(new Font("Tahoma",Font.BOLD,15));
+        b2.addActionListener(this);
+        panel.add(b2);
+
+        setUndecorated(true);
+        setLayout(null);
+        setSize(900,700);
+        setLocation(400,160);
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == b2) {
+            String q = "select * from Room where Availability = '" + c1.getSelectedItem() + "'";
+            try {
+                Connector c = new Connector();
+                ResultSet resultSet = c.statement.executeQuery(q);
+                table.setModel(DbUtils.resultSetToTableModel(resultSet));
+            } catch (Exception E) {
+                E.printStackTrace();
+            }
+
+        }else if (e.getSource()==b1) {
+            setVisible(false);
+        }
+    }
+
+    public static void main(String[] arg){
+        new SearchRoom();
+    }
+}
