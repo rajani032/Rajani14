@@ -1,0 +1,159 @@
+package hospital.management.system;
+
+import net.proteanit.sql.DbUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.util.Date;
+
+public class Patient_discharge extends JFrame implements ActionListener {
+    JButton b1,b2,b3;
+    Choice choice;
+    JLabel label1,label2,label3,label4,label5,labelRn,labelTin;
+    Patient_discharge(){
+
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBounds(5,5,900,500);
+        panel.setBackground(new Color(207, 243, 250));
+        add(panel);
+
+        label1= new JLabel("Check-Out");
+        label1.setBounds(100,20,150,25);
+        label1.setFont(new Font("Tahoma",Font.BOLD,15));
+        label1.setForeground(Color.black);
+        panel.add(label1);
+
+        label2= new JLabel("Customer Id");
+        label2.setBounds(30,80,150,20);
+        label2.setFont(new Font("Tahoma",Font.BOLD,15));
+        label2.setForeground(Color.black);
+        panel.add(label2);
+
+        label3= new JLabel("Room Number");
+        label3.setBounds(30,130,500,15);
+        label3.setFont(new Font("Tahoma",Font.BOLD,15));
+        label3.setForeground(Color.black);
+        panel.add(label3);
+
+        labelRn= new JLabel("");
+        labelRn.setBounds(200,130,500,15);
+        labelRn.setFont(new Font("Tahoma",Font.BOLD,15));
+        labelRn.setForeground(Color.black);
+        panel.add(labelRn);
+
+        label4= new JLabel("In Time");
+        label4.setBounds(30,170,500,15);
+        label4.setFont(new Font("Tahoma",Font.BOLD,15));
+        label4.setForeground(Color.black);
+        panel.add(label4);
+
+        labelTin= new JLabel("");
+        labelTin.setBounds(200,170,500,15);
+        labelTin.setFont(new Font("Tahoma",Font.BOLD,15));
+        labelTin.setForeground(Color.black);
+        panel.add(labelTin);
+
+        label5= new JLabel("Out Time");
+        label5.setBounds(30,210,150,15);
+        label5.setFont(new Font("Tahoma",Font.BOLD,15));
+        label5.setForeground(Color.black);
+        panel.add(label5);
+
+        Date date1 = new Date();
+
+        JLabel date = new JLabel("" + date1);
+        date.setBounds(200,210,300,30);
+        date.setForeground(Color.black);
+        date.setFont(new Font("Tahoma",Font.BOLD,15));
+        panel.add(date);
+
+        b1= new JButton("Discharge");
+        b1.setBounds(30,300,150,25);
+        b1.setForeground(Color.white);
+        b1.setBackground(Color.black);
+        b1.setFont(new Font("Tahoma",Font.BOLD,15));
+        b1.addActionListener(this);
+        panel.add(b1);
+
+        b2 = new JButton("Check");
+        b2.setFont(new Font("Tahoma",Font.BOLD,15));
+        b2.setBounds(190,300,150,25);
+        b2.setForeground(Color.white);
+        b2.setBackground(Color.black);
+        b2.addActionListener(this);
+        panel.add(b2);
+
+        b3 = new JButton("Back");
+        b3.setFont(new Font("Tahoma",Font.BOLD,15));
+        b3.setBounds(350,300,150,25);
+        b3.setForeground(Color.white);
+        b3.setBackground(Color.black);
+        b3.addActionListener(this);
+        panel.add(b3);
+
+        choice = new Choice();
+        choice.setBounds(200,80,150,25);
+        panel.add(choice);
+
+        try {
+            Connector c = new Connector();
+            String q = "Select * from Patient_Info";
+            ResultSet resultSet = c.statement.executeQuery(q);
+            while (resultSet.next()){
+                choice.add(resultSet.getString("Number"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        setUndecorated(true);
+        setLayout(null);
+        setSize(800,400);
+        setLocation(400,250);
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == b2) {
+            Connector c = new Connector();
+            ResultSet resultSet;
+            try {
+             resultSet = c.statement.executeQuery("Select * from Patient_Info where Number = '"+choice.getSelectedItem()+"'");
+             while(resultSet.next()){
+                 labelRn.setText(resultSet.getString("Room_No"));
+                 labelTin.setText(resultSet.getString("Time"));
+             }
+            }catch (Exception E){
+                E.printStackTrace();
+            }
+        }
+        if(e.getSource()==b1){
+            Connector c1 = new Connector();
+            try{
+                c1.statement.executeUpdate("delete from Patient_Info where Number = '"+choice.getSelectedItem()+"'");
+                c1.statement.executeUpdate("update room set  Availability = 'Available' where Room_No = '"+labelRn.getText()+"'" );
+                JOptionPane.showMessageDialog(null,"Done");
+                setVisible(false);
+
+            }catch (Exception E1){
+                E1.printStackTrace();
+            }
+        }
+        if(e.getSource()==b3){
+            setVisible(false);
+            new Reception(true);
+        }
+
+
+    }
+
+    public static void main(String[] args){
+        new Patient_discharge();
+    }
+
+}
