@@ -1,0 +1,160 @@
+package hospital.management.system;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class Reception extends JFrame implements ActionListener {
+    JButton button,button1,button2,button3,button4,button5,button6,button7,button8,button9;
+
+    Reception(boolean b){
+
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBounds(5,160,1525,670);
+        panel.setBackground(new Color(207, 243, 250));
+        add(panel);
+
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(null);
+        panel2.setBounds(5,5,1525,150);
+        panel2.setBackground(new Color(207, 243, 250));
+        add(panel2);
+
+        ImageIcon imageIcon = new ImageIcon(ClassLoader.getSystemResource("Iccon/Docters.jpg"));
+        Image i1 = imageIcon.getImage().getScaledInstance(250,160,Image.SCALE_DEFAULT);
+        ImageIcon imageIcon1 = new ImageIcon(i1);
+        JLabel label = new JLabel(imageIcon1);
+        label.setBounds(1270,0,250,160);
+        panel2.add(label);
+
+        ImageIcon imageIcon2 = new ImageIcon(ClassLoader.getSystemResource("Iccon/Ambulance.jpg"));
+        Image i2 = imageIcon2.getImage().getScaledInstance(250,170,Image.SCALE_DEFAULT);
+        ImageIcon imageIcon3 = new ImageIcon(i2);
+        JLabel label1 = new JLabel(imageIcon3);
+        label1.setBounds(1030,0,250,170);
+        panel2.add(label1);
+
+        button = new JButton("Add new patient ");
+        button.setBounds(30,15,200,30);
+        button.setBackground(new Color(246,215,118));
+        button.setFont(new Font("serif",Font.BOLD,20));
+        button.addActionListener(this);
+        panel2.add(button);
+
+        button1 = new JButton("Room");
+        button1.setBounds(30,58,200,30);
+        button1.setBackground(new Color(246,215,118));
+        button1.setFont(new Font("serif",Font.BOLD,20));
+        button1.addActionListener(this);
+        panel2.add(button1);
+
+        button2 = new JButton("Department");
+        button2.setBounds(30,100,200,30);
+        button2.setBackground(new Color(246,215,118));
+        button2.setFont(new Font("serif",Font.BOLD,20));
+        button2.addActionListener(this);
+        panel2.add(button2);
+
+        button3 = new JButton("All Employee Info");
+        button3.setBounds(270,15,200,30);
+        button3.setBackground(new Color(246,215,118));
+        button3.setFont(new Font("serif",Font.BOLD,20));
+        button3.addActionListener(this);
+        panel2.add(button3);
+
+        button4 = new JButton("Patient Info");
+        button4.setBounds(270,58,200,30);
+        button4.setBackground(new Color(246,215,118));
+        button4.setFont(new Font("serif",Font.BOLD,20));
+        button4.addActionListener(this);
+        panel2.add(button4);
+
+        button5 = new JButton("Patient Discharge");
+        button5.setBounds(270,100,200,30);
+        button5.setBackground(new Color(246,215,118));
+        button5.setFont(new Font("serif",Font.BOLD,20));
+        button5.addActionListener(this);
+        panel2.add(button5);
+
+        button6 = new JButton("Update Patient Details");
+        button6.setBounds(510,15,250,30);
+        button6.setBackground(new Color(246,215,118));
+        button6.setFont(new Font("serif",Font.BOLD,20));
+        button6.addActionListener(this);
+        panel2.add(button6);
+
+        button7 = new JButton("Hospital Ambulance");
+        button7.setBounds(510,58,250,30);
+        button7.setBackground(new Color(246,215,118));
+        button7.setFont(new Font("serif",Font.BOLD,20));
+        button7.addActionListener(this);
+        panel2.add(button7);
+
+        button8 = new JButton("Search Room");
+        button8.setBounds(510,100,250,30);
+        button8.setBackground(new Color(246,215,118));
+        button8.setFont(new Font("serif",Font.BOLD,20));
+        button8.addActionListener(this);
+        panel2.add(button8);
+
+        button9 = new JButton("Logout");
+        button9.setBounds(800,15,200,30);
+        button9.setBackground(new Color(246,215,118));
+        button9.setFont(new Font("serif",Font.BOLD,20));
+        button9.addActionListener(this);
+        panel2.add(button9);
+
+        //setUndecorated(true);
+        setLayout(null);
+        setSize(1950,1090);
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == button) {
+            new New_Patient();
+        }
+        if (e.getSource() == button1) {
+            new Room();
+
+        }
+        if (e.getSource() == button2) {
+            new Department();
+
+        }
+        if (e.getSource() == button3) {
+            new Employee_Info();
+
+        }
+        if (e.getSource() == button4) {
+            new Patient_Info();
+
+        }
+        if (e.getSource() == button5) {
+            new Patient_discharge();
+
+        }
+        if (e.getSource() == button6) {
+            new Update_patient_details();
+
+        }
+        if (e.getSource() == button7) {
+            new Ambulance();
+        }
+        if (e.getSource() == button8) {
+            new SearchRoom();
+        }
+        if (e.getSource() == button9){
+            setVisible(false);
+            new Login();
+        }
+
+    }
+
+    public static void main(String[] args){
+        new Reception(true);
+    }
+}
