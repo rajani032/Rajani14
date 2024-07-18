@@ -1,0 +1,229 @@
+package hospital.management.system;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.util.Date;
+
+public class New_Patient extends JFrame implements ActionListener {
+    JTextField textField1,textField2,textField3,textField4;
+    JComboBox comboBox;
+    JRadioButton r1,r2;
+    Choice c1;
+    JButton b1,b2;
+    JLabel date;
+
+    New_Patient(){
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBounds(5,5,1525,670);
+        panel.setBackground(new Color(207, 243, 250));
+        add(panel);
+
+        ImageIcon imageIcon = new ImageIcon(ClassLoader.getSystemResource("Iccon/patient2.jpg"));
+        Image i1 = imageIcon.getImage().getScaledInstance(320,250,Image.SCALE_DEFAULT);
+        ImageIcon imageIcon1 = new ImageIcon(i1);
+        JLabel label = new JLabel(imageIcon1);
+        label.setBounds(515,150,320,250);
+        panel.add(label);
+
+        JLabel Name1= new JLabel("New Patient Form");
+        Name1.setBounds(118,11,260,50);
+        Name1.setFont(new Font("Tahoma",Font.BOLD,25));
+        Name1.setForeground(Color.black);
+        panel.add(Name1);
+
+        JLabel id= new JLabel("ID:");
+        id.setBounds(50,75,60,30);
+        id.setFont(new Font("Tahoma",Font.BOLD,15));
+        id.setForeground(Color.black);
+        panel.add(id);
+
+        comboBox = new JComboBox<>(new String[] {"Aadhar card","Voter Id","Driver Licence"});
+        comboBox.setBounds(250,75,250,30);
+        comboBox.setForeground(Color.black);
+        comboBox.setBackground(Color.white);
+        comboBox.setFont(new Font("Tahoma",Font.BOLD,15));
+        panel.add(comboBox);
+
+        JLabel Number= new JLabel("Number:");
+        Number.setBounds(50,120,120,30);
+        Number.setFont(new Font("Tahoma",Font.BOLD,15));
+        Number.setForeground(Color.black);
+        panel.add(Number);
+
+        textField1 = new JTextField("");
+        textField1.setBounds(250,120,250,30);
+        textField1.setForeground(Color.black);
+        textField1.setBackground(Color.white);
+        textField1.setFont(new Font("Tahoma",Font.BOLD,15));
+        panel.add(textField1);
+
+        JLabel Name= new JLabel("Name:");
+        Name.setBounds(50,160,120,30);
+        Name.setFont(new Font("Tahoma",Font.BOLD,15));
+        Name.setForeground(Color.black);
+        panel.add(Name);
+
+        textField2 = new JTextField("");
+        textField2.setBounds(250,160,250,30);
+        textField2.setForeground(Color.black);
+        textField2.setBackground(Color.white);
+        textField2.setFont(new Font("Tahoma",Font.BOLD,15));
+        panel.add(textField2);
+
+        JLabel Gender= new JLabel("Gender:");
+        Gender.setBounds(50,200,60,30);
+        Gender.setFont(new Font("Tahoma",Font.BOLD,15));
+        Gender.setForeground(Color.black);
+        panel.add(Gender);
+
+        r1 = new JRadioButton("Male");
+        r1.setBounds(250,200,100,30);
+        r1.setForeground(Color.black);
+        r1.setBackground(Color.white);
+        r1.setFont(new Font("Tahoma",Font.BOLD,15));
+        panel.add(r1);
+
+        r2 = new JRadioButton("Female");
+        r2.setBounds(400,200,100,30);
+        r2.setForeground(Color.black);
+        r2.setBackground(Color.white);
+        r2.setFont(new Font("Tahoma",Font.BOLD,15));
+        panel.add(r2);
+
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(r1);
+        buttonGroup.add(r2);
+
+        JLabel Disease= new JLabel("Disease:");
+        Disease.setBounds(50,240,120,30);
+        Disease.setFont(new Font("Tahoma",Font.BOLD,15));
+        Disease.setForeground(Color.black);
+        panel.add(Disease);
+
+        textField3 = new JTextField("");
+        textField3.setBounds(250,240,250,30);
+        textField3.setForeground(Color.black);
+        textField3.setBackground(Color.white);
+        textField3.setFont(new Font("Tahoma",Font.BOLD,15));
+        panel.add(textField3);
+
+        JLabel Room= new JLabel("Room:");
+        Room.setBounds(50,280,120,35);
+        Room.setFont(new Font("Tahoma",Font.BOLD,15));
+        Room.setForeground(Color.black);
+        panel.add(Room);
+
+        c1 = new Choice();
+        try{
+            Connector c2 = new Connector();
+            ResultSet resultSet = c2.statement.executeQuery("Select * from Room");
+            while(resultSet.next()){
+                c1.add(resultSet.getString("Room_no"));
+            }
+        }catch (Exception E){
+            E.printStackTrace();
+        }
+        c1.setBounds(250,280,250,30);
+        c1.setFont(new Font("Tahoma",Font.BOLD,15));
+        c1.setForeground(Color.white);
+        c1.setBackground(Color.black);
+        panel.add(c1);
+
+
+        JLabel Date1= new JLabel("Time:");
+        Date1.setBounds(50,320,120,30);
+        Date1.setFont(new Font("Tahoma",Font.BOLD,15));
+        Date1.setForeground(Color.black);
+        panel.add(Date1);
+
+        Date date1 = new Date();
+
+        date = new JLabel("" + date1);
+        date.setBounds(250,320,300,30);
+        date.setForeground(Color.black);
+        date.setFont(new Font("Tahoma",Font.BOLD,15));
+        panel.add(date);
+
+        JLabel Deposit = new JLabel("Deposit:");
+        Deposit.setBounds(50,360,120,30);
+        Deposit.setFont(new Font("Tahoma",Font.BOLD,15));
+        Deposit.setForeground(Color.black);
+        panel.add(Deposit);
+
+        textField4 = new JTextField("");
+        textField4.setBounds(250,360,250,30);
+        textField4.setForeground(Color.black);
+        textField4.setBackground(Color.white);
+        textField4.setFont(new Font("Tahoma",Font.BOLD,15));
+        panel.add(textField4);
+
+        b1 = new JButton("ADD");
+        b1.setFont(new Font("serif",Font.BOLD,15));
+        b1.setBounds(90,420,100,25);
+        b1.setForeground(Color.white);
+        b1.setBackground(Color.black);
+        b1.addActionListener(this);
+        panel.add(b1);
+
+        b2 = new JButton("Back");
+        b2.setFont(new Font("serif",Font.BOLD,15));
+        b2.setBounds(250,420,100,25);
+        b2.setForeground(Color.white);
+        b2.setBackground(Color.black);
+        b2.addActionListener(this);
+        panel.add(b2);
+
+        setUndecorated(true);
+        setLayout(null);
+        setSize(850,550);
+        setLocation(300,250);
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == b2) {
+            new Reception(true);
+            setVisible(false);
+        }
+        if(e.getSource()==b1){
+            Connector c = new Connector();
+            String radiobBtn = null;
+            if(r1.isSelected()){
+                radiobBtn = "Male";
+            }else if (r2.isSelected()){
+                radiobBtn = "Female";
+            }
+            String s1 = (String)comboBox.getSelectedItem();
+            String s2 = textField1.getText();
+            String s3 = textField2.getText();
+            String s4 = radiobBtn;
+            String s5 = textField3.getText();
+            String s6 = c1.getSelectedItem();
+            String s7 = date.getText();
+            String s8 = textField4.getText();
+
+            try{
+               String q = "insert into Patient_Info value('"+s1+"','"+s2+"','"+s3+"','"+s4+"','"+s5+"','"+s6+"','"+s7+"','"+s8+"')" ;
+               String q1 = "update room set Availability = 'Occupied' where Room_no = "+s6;
+               c.statement.executeUpdate(q);
+               c.statement.executeUpdate(q1);
+               JOptionPane.showMessageDialog(null,"Added Successfully");
+               setVisible(false);
+            }catch (Exception E1){
+                E1.printStackTrace();
+            }
+        }else {
+            setVisible(false);
+        }
+
+    }
+
+    public static void main(String[] args){
+        new New_Patient();
+   }
+}
